@@ -29,6 +29,9 @@ This repository hosts **7 groundbreaking open-source projects**, each designed t
 
 Each project will be released **bi-weekly**, with complete source code, Helm charts, Terraform templates, and step-by-step “Run in 15 Minutes” guides.
 
+<img width="1653" height="1381" alt="MindOps1" src="https://github.com/user-attachments/assets/16444937-112a-4411-b10a-f6d1ccdba455" />
+
+
 ---
 
 ## 🧠 Why MindOps?
