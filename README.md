@@ -1,7 +1,7 @@
 # 🧠 MindOps — Cognitive Observability for the AI Era
 
 > *“When your systems start thinking, that’s not science fiction anymore — that’s MindOps.”*  
-> — Huzefa Husain | Author, *Dominant Forces in AI*
+> -> Huzefa Husain | Author, *[Dominant Forces in AI](https://lnkd.in/ewS5eKvw)*
 
 ---
 
