@@ -8,7 +8,7 @@ collecting all logs, traces and metrics, CAAT continuously tunes what is
 recorded, ensuring that you capture the right signals at the right time
 without breaking the bank.
 
-![CAAT Architecture](/docs/images/caat_architecture.png)
+![CAAT Architecture](/projects/caat/docs/images/caat_architecture.png)
 
 ## Components
 
@@ -41,6 +41,46 @@ CAAT consists of several distinct components working together:
 
 CAAT also ships with sample Kubernetes deployments, Grafana dashboards and
 detailed documentation to help you get started.
+
+## Detailed Architecture Diagram
+```mermaid
+flowchart LR
+    subgraph INFRA [Infrastructure / Workloads]
+        K8S[Kubernetes Workloads]
+    end
+    subgraph SENSING [eBPF Runtime Sensing]
+        EBPF[eBPF Probes]
+    end
+    subgraph PIPELINE [Telemetry Pipeline]
+        OTEL[OpenTelemetry Collector]
+    end
+    subgraph BRAIN [MindOps Brain]
+        BUDGET[Telemetry Budget Engine]
+        RL[RL Telemetry Optimizer]
+        RAG[Trace-Native RAG Contextual Layer]
+    end
+    subgraph CONTROL [Multi-Cloud Control Plane]
+        AWS[AWS]
+        AZURE[Azure]
+        GCP[GCP]
+        GRAF[Grafana Dashboards]
+    end
+
+    K8S --> EBPF
+    EBPF --> OTEL
+    OTEL --> BUDGET
+    BUDGET --> RL
+    RL --> OTEL
+    RL --> AWS
+    RL --> AZURE
+    RL --> GCP
+    RAG --> RL
+    K8S --> RAG
+    OTEL --> GRAF
+    AWS --> GRAF
+    AZURE --> GRAF
+    GCP --> GRAF
+```
 
 ## Getting Started
 
