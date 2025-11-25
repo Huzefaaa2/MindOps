@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "caat.fullname" . }}-rag
+  labels: {{ include "caat.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ragContextLayer.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "caat.fullname" . }}-rag
+  template:
+    metadata:
+      labels:
+        app: {{ include "caat.fullname" . }}-rag
+    spec:
+      containers:
+        - name: rag-context-layer
+          image: {{ .Values.ragContextLayer.image }}
+          command: {{ toJson .Values.ragContextLayer.command }}
+          env: {{ toYaml .Values.ragContextLayer.env | nindent 12 }}

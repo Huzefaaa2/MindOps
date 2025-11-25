@@ -1,0 +1,40 @@
+# Default values for CAAT Helm chart.
+# These values can be overridden via the --values or --set flags when
+# installing the chart.  They control the number of replicas, image
+# tags, resource requests/limits, and environment variables for
+# components.
+
+image:
+  repository: myregistry/caat
+  tag: latest
+
+rlPolicyEngine:
+  replicaCount: 1
+  image: "python:3.11-slim"
+  command: ["python", "-m", "projects.caat.rl_policy_engine.policy_agent", "--serve"]
+  env:
+    - name: PYTHONUNBUFFERED
+      value: "1"
+
+ebpfProbes:
+  daemonSet: true
+  image: "golang:1.21"
+  command: ["./ebpf-probes"]
+  privileged: true
+
+ragContextLayer:
+  replicaCount: 1
+  image: "python:3.11-slim"
+  command: ["python", "-m", "projects.caat.rag_context_layer.context_agent", "--serve"]
+  env:
+    - name: OPENAI_API_KEY
+      value: ""  # override with your API key
+
+telemetryBudgetEngine:
+  replicaCount: 1
+  image: "python:3.11-slim"
+  command: ["python", "-m", "projects.caat.telemetry_budget_engine.budget_controller", "--serve"]
+
+service:
+  type: ClusterIP
+  port: 8080

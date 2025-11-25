@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "caat.fullname" . }}-rlpolicy
+  labels: {{ include "caat.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.rlPolicyEngine.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "caat.fullname" . }}-rlpolicy
+  template:
+    metadata:
+      labels:
+        app: {{ include "caat.fullname" . }}-rlpolicy
+    spec:
+      containers:
+        - name: rl-policy-engine
+          image: {{ .Values.rlPolicyEngine.image }}
+          command: {{ toJson .Values.rlPolicyEngine.command }}
+          env: {{ toYaml .Values.rlPolicyEngine.env | nindent 12 }}
