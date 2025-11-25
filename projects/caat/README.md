@@ -8,7 +8,7 @@ collecting all logs, traces and metrics, CAAT continuously tunes what is
 recorded, ensuring that you capture the right signals at the right time
 without breaking the bank.
 
-![CAAT Architecture](../docs/images/caat_architecture.png)
+![CAAT Architecture](/docs/images/caat_architecture.png)
 
 ## Components
 
