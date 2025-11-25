@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "caat.fullname" . }}-ebpf
+  labels: {{ include "caat.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "caat.fullname" . }}-ebpf
+  template:
+    metadata:
+      labels:
+        app: {{ include "caat.fullname" . }}-ebpf
+    spec:
+      hostPID: true
+      tolerations:
+        - operator: "Exists"
+      containers:
+        - name: ebpf-probes
+          image: {{ .Values.ebpfProbes.image }}
+          command: {{ toJson .Values.ebpfProbes.command }}
+          securityContext:
+            privileged: {{ .Values.ebpfProbes.privileged }}

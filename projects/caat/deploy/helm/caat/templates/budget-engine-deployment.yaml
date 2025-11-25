@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "caat.fullname" . }}-budget
+  labels: {{ include "caat.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.telemetryBudgetEngine.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "caat.fullname" . }}-budget
+  template:
+    metadata:
+      labels:
+        app: {{ include "caat.fullname" . }}-budget
+    spec:
+      containers:
+        - name: telemetry-budget-engine
+          image: {{ .Values.telemetryBudgetEngine.image }}
+          command: {{ toJson .Values.telemetryBudgetEngine.command }}

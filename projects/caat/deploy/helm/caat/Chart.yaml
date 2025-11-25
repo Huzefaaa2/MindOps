@@ -1,0 +1,19 @@
+apiVersion: v2
+name: caat
+description: Helm chart for the Cost‑Aware Adaptive Telemetry (CAAT) project
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+maintainers:
+  - name: MindOps
+    email: info@mindops.example.com
+
+home: https://github.com/Huzefaaa2/MindOps
+keywords:
+  - observability
+  - ebpf
+  - reinforcement learning
+  - telemetry
+
+dependencies: []

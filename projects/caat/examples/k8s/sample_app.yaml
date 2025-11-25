@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: caat-example
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: caat-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: demo
+          image: nginx:1.25-alpine
+          ports:
+            - containerPort: 80
+          # Generate some log noise by serving HTTP requests
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
