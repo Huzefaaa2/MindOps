@@ -18,9 +18,7 @@ the remaining projects are placeholders for future work.
 
 | Project | Directory | Description |
 | --- | --- | --- |
-| 1 | [`projects/caat`](projects/caat) | **Cost‑Aware Adaptive Telemetry (CAAT)** – an intelligent observability
-  stack that adjusts the level of logging, tracing and metrics collection in
-  real time based on runtime context and budget constraints. |
+| 1 | [`projects/caat`](projects/caat) | **Cost‑Aware Adaptive Telemetry (CAAT)** – an intelligent observability stack that adjusts the level of logging, tracing and metrics collection in real time based on runtime context and budget constraints. |
 | 2 | `projects/t‑rag` | **Trace‑Native RAG for Root Cause** – coming soon. |
 | 3 | `projects/ebpf‑bot` | **eBPF Coverage Bot** – coming soon. |
 | 4 | `projects/slo‑copilot` | **SLO Copilot + Trace‑Based Testing** – coming soon. |
