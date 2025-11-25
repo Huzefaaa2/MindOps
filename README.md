@@ -37,3 +37,6 @@ contains its own build and deployment instructions.
 
 This repository is licensed under the MIT License.  See
 [`LICENSE`](LICENSE) for details.
+
+## Wiki
+[MindOps Wiki](https://github.com/Huzefaaa2/MindOps/wiki)
