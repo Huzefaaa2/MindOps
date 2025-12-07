@@ -1,0 +1,32 @@
+[
+  {
+    "trace_id": "12345",
+    "span_id": "span01",
+    "parent_id": null,
+    "name": "GET /api/orders",
+    "service": "gateway",
+    "attributes": {
+      "http.method": "GET",
+      "http.status_code": 500,
+      "error.message": "Internal Server Error"
+    },
+    "start_time": "2025-12-07T10:00:00Z",
+    "end_time": "2025-12-07T10:00:01Z",
+    "status": "ERROR"
+  },
+  {
+    "trace_id": "12345",
+    "span_id": "span02",
+    "parent_id": "span01",
+    "name": "SELECT * FROM orders",
+    "service": "db",
+    "attributes": {
+      "db.statement": "SELECT * FROM orders WHERE id=...",
+      "db.system": "postgresql",
+      "error.message": "timeout while waiting for lock"
+    },
+    "start_time": "2025-12-07T10:00:00Z",
+    "end_time": "2025-12-07T10:00:05Z",
+    "status": "ERROR"
+  }
+]
