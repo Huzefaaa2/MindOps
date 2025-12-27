@@ -13,7 +13,7 @@ intelligent telemetry system called **Cost‑Aware Adaptive Telemetry (CAAT)**.
 This repository follows a modular layout under the `projects/` directory.  Each
 subdirectory contains a self‑contained project along with its code, deployment
 scripts, documentation and examples.  A brief overview of the planned
-projects is provided below.  Only Project 1 is implemented at the moment;
+projects is provided below.  project 1, 2, and 3 are implemented at the moment;
 the remaining projects are placeholders for future work.
 
 | Project | Directory | Description |
