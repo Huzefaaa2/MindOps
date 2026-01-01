@@ -59,6 +59,17 @@ the remaining projects are placeholders for future work.
 | 6 | `projects/pii‑guardrail` | **PII Guardrail Pre‑Ingest** – coming soon. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-6-PII-Guardrail) |
 | 7 | `projects/topology‑graph‑rca` | **Topology Graph RCA Engine** – coming soon. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-7-Topology-Graph-RCA) |
 
+## Project Deep Dives (LinkedIn)
+
+Short write‑ups and demo videos for the implemented projects:
+
+- **Project 1: CAAT** — Adaptive telemetry that learns to spend your observability budget where it matters most.  
+  https://www.linkedin.com/pulse/mindops-project-1-caat-cost-aware-adaptive-telemetry-edition-husain-ofgke
+- **Project 2: T‑RAG** — Trace‑native RAG that turns live telemetry into fast, explainable root cause analysis.  
+  https://www.linkedin.com/pulse/mindops-project-2-trag-tracenative-rag-root-cause-edition-husain-vcklf
+- **Project 3: eBPF Bot** — Closing the loop from coverage gaps to probe decisions with full telemetry.  
+  https://www.linkedin.com/pulse/mindops-project-3-ebpf-coverage-bot-completing-loop-huzefa-husain-rtdaf
+
 ## Contributing
 
 We welcome contributions!  Please read the contribution guidelines in
