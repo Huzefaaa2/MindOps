@@ -8,6 +8,8 @@ analysis.  Over time this repository will host multiple projects under the
 MindOps umbrella.  The first project, described below, implements an
 intelligent telemetry system called **Cost‑Aware Adaptive Telemetry (CAAT)**.
 
+[Dominant Forces in AI,](https://www.linkedin.com/newsletters/dominant-forces-in-ai-7231479529104371712/) Subscribe Now to stay ahead with the latest in AI trends, innovations, and discussions.
+
 ## MindOps Constellation
 
 ```mermaid
@@ -63,6 +65,8 @@ We welcome contributions!  Please read the contribution guidelines in
 [`docs/contributing.md`](docs/contributing.md) for instructions on how to submit
 bug fixes, feature requests or new components.  Each project directory
 contains its own build and deployment instructions.
+
+[Dominant Forces in AI,](https://www.linkedin.com/newsletters/dominant-forces-in-ai-7231479529104371712/) Subscribe Now to stay ahead with the latest in AI trends, innovations, and discussions.
 
 ## License
 
