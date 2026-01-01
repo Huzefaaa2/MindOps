@@ -1,0 +1,9 @@
+# pyproject.toml (place in ebpf-bot root)
+[project]
+name = "ebpf-bot"
+version = "0.1.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
