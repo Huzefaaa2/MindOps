@@ -1,8 +1,8 @@
-{{- if ne .Values.mode "sidecar" -}}
+{{- if eq .Values.mode "sidecar" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "zeroTouch.fullname" . }}-config
+  name: otel-collector-sidecar-config
   labels:
 {{ include "zeroTouch.labels" . | indent 4 }}
 data:

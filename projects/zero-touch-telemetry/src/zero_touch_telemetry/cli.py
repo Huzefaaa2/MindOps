@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import List, Optional, Tuple
 
+from .apply import apply_plan_dict
 from .discovery import discover_services
 from .planner import ZeroTouchPlanner
 from .policy import load_sampling_policy
@@ -32,6 +33,9 @@ def main() -> None:
     parser.add_argument("--sampling-rate", type=float, default=1.0)
     parser.add_argument("--policy", help="Optional JSON policy file with sampling_action or sampling_rate")
     parser.add_argument("--output-dir", help="Write plan artifacts to this directory")
+    parser.add_argument("--apply", action="store_true", help="Apply manifest and patches via kubectl")
+    parser.add_argument("--kubectl", default="kubectl", help="kubectl binary path")
+    parser.add_argument("--dry-run", action="store_true", help="Print kubectl commands without executing")
     args = parser.parse_args()
 
     exporters, otlp_endpoint = _parse_exporters(args.exporter)
@@ -57,6 +61,16 @@ def main() -> None:
         (out_dir / "collector-config.yaml").write_text(plan.collector.config_yaml, encoding="utf-8")
         (out_dir / "collector-manifest.yaml").write_text(plan.collector.manifest_yaml, encoding="utf-8")
         (out_dir / "plan.json").write_text(json.dumps(_serialize(plan), indent=2), encoding="utf-8")
+
+    if args.apply:
+        commands = apply_plan_dict(
+            _serialize(plan),
+            kubectl=args.kubectl,
+            dry_run=args.dry_run,
+            output_dir=Path(args.output_dir) if args.output_dir else None,
+        )
+        if args.dry_run:
+            print("\n".join(commands))
 
     print(json.dumps(_serialize(plan), indent=2))
 

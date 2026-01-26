@@ -13,6 +13,25 @@ manual work of wiring exporters and sidecars for each service.
 - Instrumentation env var plans and patch hints per workload.
 - Outputs in JSON plus Kubernetes YAML manifests.
 
+## Architecture
+
+```mermaid
+flowchart LR
+  Manifests[K8s Manifests] --> Discovery[Service Discovery]
+  Discovery --> Planner[Collector Planner]
+  Planner --> Config[Collector Config]
+  Planner --> Manifest[Collector Manifests]
+  Planner --> Patches[Workload Patches]
+```
+
+## Plan outputs
+
+| Artifact | Purpose | File (when `--output-dir`) |
+| --- | --- | --- |
+| Collector config | OTEL collector configuration | `collector-config.yaml` |
+| Collector manifest | K8s Deployment/DaemonSet/ConfigMap | `collector-manifest.yaml` |
+| Plan JSON | Full discovery + plan details | `plan.json` |
+
 ## Directory structure
 
 ```
@@ -88,12 +107,45 @@ Switch to daemonset:
 helm install ztt deploy/helm/zero-touch-telemetry --set mode=daemonset
 ```
 
+Sidecar mode (config map only for injection):
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry --set mode=sidecar
+```
+
+### Operator CRDs + Instrumentation
+
+The chart ships a minimal Instrumentation CRD and optional Instrumentation resources. Enable with:
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry \
+  --set operator.enabled=true
+```
+
 ## OpenTelemetry Operator auto-instrumentation
 
 Sample `Instrumentation` CRs and workload annotations live in `deploy/otel-operator/`:
 
 ```bash
 kubectl apply -f deploy/otel-operator/instrumentation.yaml
+```
+
+## Plan → Apply workflow
+
+Generate a plan and apply it to the cluster:
+
+```bash
+PYTHONPATH=src python3 -m zero_touch_telemetry.cli \
+  --manifests examples/sample_k8s.yaml \
+  --mode gateway \
+  --output-dir out \
+  --apply
+```
+
+Apply a saved plan later:
+
+```bash
+PYTHONPATH=src python3 -m zero_touch_telemetry.apply_cli --plan out/plan.json
 ```
 
 ## Configuration

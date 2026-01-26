@@ -82,11 +82,11 @@ class SLOCopilot:
             "t-rag": trag_status().__dict__,
             "ebpf-bot": ebpf_status().__dict__,
             "pii-guardrail": self.pii_guardrail.status(),
+            "topology-rca": self.topology_rca.status(),
         }
 
         future_integrations = {
             "zero_touch_telemetry": self.zero_touch.status(),
-            "topology_rca": self.topology_rca.status(),
         }
 
         return CopilotReport(

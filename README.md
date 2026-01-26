@@ -46,7 +46,7 @@ flowchart TB
 This repository follows a modular layout under the `projects/` directory.  Each
 subdirectory contains a self‑contained project along with its code, deployment
 scripts, documentation and examples.  A brief overview of the planned
-projects is provided below.  Projects 1 through 6 are implemented at the moment;
+projects is provided below.  Projects 1 through 7 are implemented at the moment;
 the remaining projects are placeholders for future work.
 
 | Project | Directory | Description | LinkedIn Deep Dive |
@@ -57,7 +57,7 @@ the remaining projects are placeholders for future work.
 | 4 | [`projects/slo‑copilot`](projects/slo-copilot) | **SLO Copilot + Trace‑Based Testing** – generates SLOs from trace baselines, runs trace‑based fault tests, emits guardrail policies, and exports OpenSLO (JSON/YAML). Integrates with CAAT, T‑RAG, and eBPF Bot. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-4-SLO-Copilot) | — |
 | 5 | [`projects/zero‑touch‑telemetry`](projects/zero-touch-telemetry) | **Zero‑Touch Telemetry for Kubernetes** – discovers workloads from manifests, plans collector topology (gateway/daemonset/sidecar), and emits OTEL configs plus patch hints. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-5-Zero-Touch-Telemetry) | — |
 | 6 | [`projects/pii‑guardrail`](projects/pii-guardrail) | **PII Guardrail Pre‑Ingest** – detects and redacts PII in logs and traces, emits redaction reports, and protects telemetry before export. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-6-PII-Guardrail) | — |
-| 7 | [`projects/topology‑graph‑rca`](projects/topology-graph-rca) | **Topology Graph RCA Engine** – correlates incidents using a service/topology graph for cross‑layer root cause analysis (coming soon). [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-7-Topology-Graph-RCA) | — |
+| 7 | [`projects/topology‑graph‑rca`](projects/topology-graph-rca) | **Topology Graph RCA Engine** – builds a service dependency graph from manifests + traces, runs graph analytics, and surfaces RCA hints. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-7-Topology-Graph-RCA) | — |
 
 ## Contributing
 

@@ -1,0 +1,75 @@
+{{- if .Values.operator.enabled }}
+{{- $ns := .Values.operator.namespace }}
+{{- $endpoint := .Values.operator.exporterEndpoint }}
+{{- $propagators := .Values.operator.propagators }}
+{{- $samplerType := .Values.operator.sampler.type }}
+{{- $samplerArg := .Values.operator.sampler.argument }}
+{{- if .Values.operator.languages.java }}
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: java
+  namespace: {{ $ns }}
+spec:
+  exporter:
+    endpoint: {{ $endpoint | quote }}
+  propagators: {{ toJson $propagators }}
+  sampler:
+    type: {{ $samplerType }}
+    argument: {{ $samplerArg | quote }}
+  java:
+    image: {{ .Values.operator.images.java | quote }}
+{{- end }}
+{{- if .Values.operator.languages.nodejs }}
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: nodejs
+  namespace: {{ $ns }}
+spec:
+  exporter:
+    endpoint: {{ $endpoint | quote }}
+  propagators: {{ toJson $propagators }}
+  sampler:
+    type: {{ $samplerType }}
+    argument: {{ $samplerArg | quote }}
+  nodejs:
+    image: {{ .Values.operator.images.nodejs | quote }}
+{{- end }}
+{{- if .Values.operator.languages.python }}
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: python
+  namespace: {{ $ns }}
+spec:
+  exporter:
+    endpoint: {{ $endpoint | quote }}
+  propagators: {{ toJson $propagators }}
+  sampler:
+    type: {{ $samplerType }}
+    argument: {{ $samplerArg | quote }}
+  python:
+    image: {{ .Values.operator.images.python | quote }}
+{{- end }}
+{{- if .Values.operator.languages.dotnet }}
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: dotnet
+  namespace: {{ $ns }}
+spec:
+  exporter:
+    endpoint: {{ $endpoint | quote }}
+  propagators: {{ toJson $propagators }}
+  sampler:
+    type: {{ $samplerType }}
+    argument: {{ $samplerArg | quote }}
+  dotnet:
+    image: {{ .Values.operator.images.dotnet | quote }}
+{{- end }}
+{{- end }}

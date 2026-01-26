@@ -19,3 +19,24 @@ collector:
   otlpExporterEndpoint: "http://otel-collector-gateway:4317"
 
 resources: {}
+
+operator:
+  enabled: false
+  namespace: observability
+  exporterEndpoint: "http://otel-collector-gateway.observability:4317"
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1.0"
+  languages:
+    java: true
+    nodejs: true
+    python: true
+    dotnet: true
+  images:
+    java: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:latest
+    nodejs: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:latest
+    python: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest
+    dotnet: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:latest
