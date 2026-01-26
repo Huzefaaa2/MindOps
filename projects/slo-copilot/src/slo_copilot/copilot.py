@@ -81,11 +81,11 @@ class SLOCopilot:
             "caat": caat_status().__dict__,
             "t-rag": trag_status().__dict__,
             "ebpf-bot": ebpf_status().__dict__,
+            "pii-guardrail": self.pii_guardrail.status(),
         }
 
         future_integrations = {
             "zero_touch_telemetry": self.zero_touch.status(),
-            "pii_guardrail": self.pii_guardrail.status(),
             "topology_rca": self.topology_rca.status(),
         }
 

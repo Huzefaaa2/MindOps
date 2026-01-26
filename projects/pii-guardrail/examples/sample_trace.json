@@ -1,0 +1,30 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {"key": "service.name", "value": {"stringValue": "checkout-service"}}
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {"name": "checkout"},
+          "spans": [
+            {
+              "traceId": "trace-123",
+              "spanId": "span-1",
+              "name": "POST /checkout",
+              "attributes": [
+                {"key": "http.method", "value": {"stringValue": "POST"}},
+                {"key": "http.url", "value": {"stringValue": "https://shop.example.com/checkout?email=bob@example.com"}},
+                {"key": "customer.email", "value": {"stringValue": "bob@example.com"}},
+                {"key": "customer.phone", "value": {"stringValue": "+1 415-555-0101"}}
+              ],
+              "status": {"code": "OK"}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
