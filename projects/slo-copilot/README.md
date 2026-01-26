@@ -105,6 +105,37 @@ PYTHONPATH=src python3 -m slo_copilot.cli \
   --export-openslo-yaml exports/openslo.yaml
 ```
 
+Validate OpenSLO (in-memory or from file):
+
+```bash
+PYTHONPATH=src python3 -m slo_copilot.cli \
+  --trace examples/sample_trace.json \
+  --validate-openslo
+```
+
+```bash
+PYTHONPATH=src python3 -m slo_copilot.cli \
+  --trace examples/sample_trace.json \
+  --validate-openslo exports/openslo.json
+```
+
+Persist SLOs to a store:
+
+```bash
+PYTHONPATH=src python3 -m slo_copilot.cli \
+  --trace examples/sample_trace.json \
+  --slo-store data/slo_store.json \
+  --store-mode merge
+```
+
+CI gate (exit 1 on failures):
+
+```bash
+PYTHONPATH=src python3 -m slo_copilot.ci_gate \
+  --trace examples/sample_trace.json \
+  --fail-on any
+```
+
 Deployment gate stub:
 
 ```bash
@@ -137,9 +168,19 @@ The CLI emits a JSON report with:
 - `rca` results from T-RAG (if available)
 - `policy_snippets` that can be enforced in deployment gates
 
+## CI gate decision matrix
+
+| Mode | Fails on | Example flag |
+| --- | --- | --- |
+| `any` | baseline, tests, guardrail | `--fail-on any` |
+| `baseline` | baseline violations only | `--fail-on baseline` |
+| `tests` | trace-based tests only | `--fail-on tests` |
+| `guardrail` | guardrail policy failures | `--fail-on guardrail` |
+
 ## Schema and OpenSLO
 
 - JSON schema for the SLO export: `projects/slo-copilot/schema/slo_export.schema.json`
+- OpenSLO bundle schema: `projects/slo-copilot/schema/openslo_bundle.schema.json`
 - OpenSLO export is a simplified mapping intended for quick integration and includes Service/SLI/SLO resources.
 - OpenSLO YAML export is a lightweight serializer for the same resources.
 

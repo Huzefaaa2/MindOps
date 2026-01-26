@@ -1,2 +1,3 @@
 # Core SLO Copilot dependencies (standard library only).
 # Optional: install project integrations (t-rag, ebpf-bot) as needed.
+# Optional: jsonschema>=4.0 for OpenSLO schema validation.

@@ -77,6 +77,18 @@ PYTHONPATH=projects/slo-copilot/src python3 -m slo_copilot.demo_all_cli \
   --telemetry-volume 1.1
 ```
 
+## MindOps Orchestrator CLI
+
+Run CAAT + SLO Copilot + Zero‑Touch + T‑RAG flows in one command:
+
+```bash
+PYTHONPATH=projects/mindops-orchestrator/src python3 -m mindops_orchestrator.cli \
+  --trace projects/slo-copilot/examples/sample_trace.json \
+  --manifests projects/zero-touch-telemetry/examples/sample_k8s.yaml \
+  --telemetry-volume 0.9 \
+  --telemetry-volume 1.1
+```
+
 [Dominant Forces in AI,](https://www.linkedin.com/newsletters/dominant-forces-in-ai-7231479529104371712/) Subscribe Now to stay ahead with the latest in AI trends, innovations, and discussions.
 
 ## License

@@ -9,12 +9,12 @@ users.
 ## Projects
 
 MindOps is composed of several distinct research projects exploring
-autonomous observability and cognitive operations.  Project 1
-(CAAT) is the only implemented project as of November 2025, but
-placeholders exist for upcoming efforts.  See the root
-[`README.md`](../README.md) for a list of projects and their
-descriptions.  When new projects are added, they should include
-their own documentation in `projects/<name>/docs`.
+autonomous observability and cognitive operations.  Projects 1–7 are
+implemented as of January 2026, with shared orchestration tooling added
+for cross‑project workflows.  See the root [`README.md`](../README.md)
+for a list of projects and their descriptions.  When new projects are
+added, they should include their own documentation in
+`projects/<name>/docs`.
 
 ## Architecture Diagrams
 
@@ -23,6 +23,12 @@ For CAAT and subsequent projects, architecture diagrams are stored in
 Markdown files to illustrate component interactions.  For example,
 the CAAT architecture diagram appears in
 [`projects/caat/README.md`](../projects/caat/README.md).
+
+## Orchestrator CLI
+
+The unified MindOps orchestrator CLI lives under `projects/mindops-orchestrator`
+and can run CAAT + SLO Copilot + Zero‑Touch + T‑RAG flows in one command.
+See [`projects/mindops-orchestrator/README.md`](../projects/mindops-orchestrator/README.md).
 
 ## Contribution Guidelines
 
