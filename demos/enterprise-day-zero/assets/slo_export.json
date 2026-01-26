@@ -1,0 +1,30 @@
+{
+  "schema_version": "slo-copilot/v1",
+  "generated_at": "2026-01-26T00:00:00Z",
+  "slos": [
+    {
+      "name": "latency-p95-checkout",
+      "service": "checkout",
+      "description": "p95 latency stays within a safe envelope.",
+      "labels": {"sli": "latency"},
+      "target": {
+        "metric": "latency_p95_ms",
+        "comparator": "<=",
+        "threshold": 250.0,
+        "window_days": 30
+      }
+    },
+    {
+      "name": "error-rate-payments",
+      "service": "payments",
+      "description": "Error rate remains within the allocated error budget.",
+      "labels": {"sli": "errors"},
+      "target": {
+        "metric": "error_rate",
+        "comparator": "<=",
+        "threshold": 0.01,
+        "window_days": 30
+      }
+    }
+  ]
+}

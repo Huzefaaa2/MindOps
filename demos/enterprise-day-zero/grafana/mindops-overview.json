@@ -1,0 +1,63 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "mindops-dayzero",
+    "title": "MindOps Day-Zero Overview",
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s",
+    "tags": ["mindops", "demo"],
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "Checkout Latency p95",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service=\"checkout-service\"}[5m])) by (le))",
+            "legendFormat": "p95"
+          }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "Error Rate",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{service=\"checkout-service\",status=~\"5..\"}[5m])) / sum(rate(http_requests_total{service=\"checkout-service\"}[5m]))",
+            "legendFormat": "error_rate"
+          }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "Sampling Rate (CAAT)",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "avg(caat_sampling_rate)",
+            "legendFormat": "sampling_rate"
+          }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "SLO Burn Rate",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "slo_burn_rate{service=\"checkout-service\"}",
+            "legendFormat": "burn_rate"
+          }
+        ]
+      }
+    ],
+    "templating": {"list": []},
+    "annotations": {"list": []},
+    "time": {"from": "now-6h", "to": "now"}
+  },
+  "folderId": 0,
+  "overwrite": false
+}

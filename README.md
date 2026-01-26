@@ -107,6 +107,13 @@ flowchart LR
 | Safer data | Pre‑ingest redaction reduces privacy risk |
 | Unified tooling | One constellation vs many disconnected systems |
 
+## Enterprise readiness pack
+
+- **MindOps Control Plane API**: lightweight gateway for policy changes, SLO export/validation, and RCA queries. See `projects/mindops-control-plane`.
+- **Enterprise Day‑Zero Demo Pack**: prebuilt dashboards, SLOs, synthetic incident, and RCA output. See `demos/enterprise-day-zero`.
+- **Data‑Flow Security Model**: PII scrubbing points + egress model. See `docs/security/data_flow_security.md`.
+- **Enterprise Adoption Guide**: phased rollout plan and operating model. See `docs/enterprise_adoption_guide.md`.
+
 ## Detailed system flow (end‑to‑end)
 
 ```mermaid
@@ -239,6 +246,37 @@ PYTHONPATH=projects/mindops-orchestrator/src python3 -m mindops_orchestrator.cli
   --trace projects/slo-copilot/examples/sample_trace.json \
   --manifests projects/zero-touch-telemetry/examples/sample_k8s.yaml \
   --export-dir out
+```
+
+## MindOps Control Plane API
+
+One gateway service to query or update policies, export SLOs, and run RCA.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r projects/mindops-control-plane/requirements.txt
+
+PYTHONPATH=projects/mindops-control-plane/src python3 -m mindops_control_plane.app
+```
+
+Example calls:
+
+```bash
+curl -s http://localhost:8088/health
+curl -s http://localhost:8088/slo/export
+curl -s -X POST http://localhost:8088/policy/sampling \
+  -H 'Content-Type: application/json' \
+  -d '{"sampling_action":"decrease_sampling"}'
+```
+
+## Enterprise Day‑Zero Demo Pack
+
+Run the end‑to‑end demo pack with prebuilt SLOs, a synthetic incident, and a sample dashboard:
+
+```bash
+cd demos/enterprise-day-zero
+cat README.md
 ```
 
 [Dominant Forces in AI,](https://www.linkedin.com/newsletters/dominant-forces-in-ai-7231479529104371712/) Subscribe Now to stay ahead with the latest in AI trends, innovations, and discussions.

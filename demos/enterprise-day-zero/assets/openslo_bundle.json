@@ -1,0 +1,20 @@
+[
+  {
+    "apiVersion": "openslo/v1",
+    "kind": "Service",
+    "metadata": {"name": "checkout"},
+    "spec": {"description": "Checkout service"}
+  },
+  {
+    "apiVersion": "openslo/v1",
+    "kind": "SLO",
+    "metadata": {"name": "latency-p95-checkout"},
+    "spec": {
+      "service": "checkout",
+      "indicator": {"type": "metric", "metricSource": "trace-derived", "metric": "latency_p95_ms"},
+      "objectives": [
+        {"displayName": "latency-p95-checkout", "op": "<=", "value": 250.0, "timeWindow": {"count": 30, "unit": "Day"}}
+      ]
+    }
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "incident_id": "demo-incident-001",
+  "summary": "Checkout latency spike driven by downstream payment-service regression.",
+  "suspected_root_cause": {
+    "service": "payment-service",
+    "version": "v2.4.2",
+    "reason": "Increased dependency latency from payment -> fraud-check"
+  },
+  "evidence": [
+    {
+      "signal": "traces",
+      "detail": "p95 latency from checkout-service to payment-service increased 2.6x"
+    },
+    {
+      "signal": "topology",
+      "detail": "checkout-service -> payment-service edge scored highest anomaly"
+    },
+    {
+      "signal": "slo",
+      "detail": "Availability SLO burn rate exceeded 2.0x for 10m window"
+    }
+  ],
+  "recommended_actions": [
+    "Rollback payment-service to v2.4.1",
+    "Increase sampling on payment-service for 30m",
+    "Run targeted trace-based test for payment latency"
+  ]
+}
