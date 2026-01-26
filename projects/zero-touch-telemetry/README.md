@@ -66,6 +66,22 @@ helm install ztt deploy/helm/zero-touch-telemetry \
   --set collector.exporters[0]=logging
 ```
 
+Override exporters for OTLP (values file):
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry \
+  -f deploy/helm/zero-touch-telemetry/examples/values-otlp.yaml
+```
+
+Override exporters for OTLP (inline):
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry \
+  --set collector.exporters[0]=otlp \
+  --set collector.otlpExporterEndpoint=http://otel-collector-gateway.observability:4317 \
+  --set collector.samplingRate=0.5
+```
+
 Switch to daemonset:
 
 ```bash

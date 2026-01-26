@@ -1,0 +1,7 @@
+mode: gateway
+
+collector:
+  exporters:
+    - otlp
+  otlpExporterEndpoint: "http://otel-collector-gateway.observability:4317"
+  samplingRate: 0.5
