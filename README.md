@@ -36,6 +36,8 @@ learns, optimizes cost, and guides operators toward the most likely root causes.
 
 ## How MindOps works (end‑to‑end)
 
+![MindOps Overview Diagram](docs/images/mindops_overview.svg)
+
 ```mermaid
 flowchart LR
   subgraph Ingest["Workloads + Telemetry"]

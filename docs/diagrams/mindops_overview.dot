@@ -1,0 +1,72 @@
+digraph MindOps {
+  rankdir=LR;
+  fontname="Helvetica";
+  bgcolor="white";
+  labelloc="t";
+  label="MindOps: Adaptive Observability + Autonomous Operations";
+  fontsize=18;
+
+  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#37474F", fontcolor="#0D47A1", penwidth=1.2];
+  edge [color="#546E7A", penwidth=1.1, arrowsize=0.8];
+
+  subgraph cluster_runtime {
+    label="Runtime + Signals";
+    style="rounded,filled";
+    color="#90CAF9";
+    fillcolor="#E3F2FD";
+
+    Workloads [label="Workloads\n(Microservices)", fillcolor="#BBDEFB"];
+    SDKs [label="OTEL SDKs", fillcolor="#C5CAE9"];
+    EBPF [label="eBPF Probes", fillcolor="#B3E5FC"];
+  }
+
+  subgraph cluster_collect {
+    label="Collection + Control";
+    style="rounded,filled";
+    color="#A5D6A7";
+    fillcolor="#E8F5E9";
+
+    ZTT [label="Zero‑Touch\nTelemetry", fillcolor="#C8E6C9"];
+    OTEL [label="OTEL\nCollectors", fillcolor="#C5E1A5"];
+    Budget [label="Telemetry\nBudget Engine", fillcolor="#DCEDC8"];
+    RL [label="RL Policy\nOptimizer", fillcolor="#A5D6A7"];
+  }
+
+  subgraph cluster_intel {
+    label="Intelligence + RCA";
+    style="rounded,filled";
+    color="#FFCC80";
+    fillcolor="#FFF3E0";
+
+    SLO [label="SLO Copilot", fillcolor="#FFE0B2"];
+    TRAG [label="T‑RAG\nRCA", fillcolor="#FFCCBC"];
+    Topo [label="Topology\nGraph RCA", fillcolor="#FFD54F"];
+  }
+
+  subgraph cluster_guard {
+    label="Governance + Safety";
+    style="rounded,filled";
+    color="#F8BBD0";
+    fillcolor="#FCE4EC";
+
+    PII [label="PII\nGuardrail", fillcolor="#F8BBD0"];
+    Gate [label="CI / Guardrail\nGates", fillcolor="#F48FB1"];
+  }
+
+  Orchestrator [label="MindOps\nOrchestrator", fillcolor="#E1BEE7", color="#6A1B9A", fontcolor="#4A148C"];
+
+  Workloads -> SDKs;
+  SDKs -> ZTT;
+  ZTT -> OTEL;
+  EBPF -> OTEL;
+
+  OTEL -> Budget -> RL -> OTEL;
+  OTEL -> PII -> TRAG;
+  OTEL -> SLO -> Gate;
+  OTEL -> Topo -> TRAG;
+  SLO -> RL [style=dashed, color="#8D6E63"];
+
+  Orchestrator -> ZTT [style=dashed, color="#6A1B9A"];
+  Orchestrator -> SLO [style=dashed, color="#6A1B9A"];
+  Orchestrator -> TRAG [style=dashed, color="#6A1B9A"];
+}
