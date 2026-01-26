@@ -13,7 +13,7 @@ from .auth import ActorContext
 AUDIT_LOG = Path(
     os.getenv(
         "CONTROL_PLANE_AUDIT_LOG",
-        str(Path(__file__).resolve().parents[2] / "mindops-control-plane" / "data" / "audit.log"),
+        str(Path(__file__).resolve().parents[2] / "data" / "audit.log"),
     )
 )
 
