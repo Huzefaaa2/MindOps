@@ -14,6 +14,7 @@ def main() -> None:
     parser.add_argument("--kubectl", default="kubectl")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--diff", action="store_true", help="Run kubectl diff before apply")
+    parser.add_argument("--diff-only", action="store_true", help="Run kubectl diff and skip apply")
     parser.add_argument("--output-dir", help="Optional output dir for manifest")
     args = parser.parse_args()
 
@@ -24,6 +25,7 @@ def main() -> None:
         kubectl=args.kubectl,
         dry_run=args.dry_run,
         diff=args.diff,
+        diff_only=args.diff_only,
         output_dir=output_dir,
     )
     if args.dry_run:

@@ -37,6 +37,7 @@ def main() -> None:
     parser.add_argument("--kubectl", default="kubectl", help="kubectl binary path")
     parser.add_argument("--dry-run", action="store_true", help="Print kubectl commands without executing")
     parser.add_argument("--diff", action="store_true", help="Run kubectl diff before apply")
+    parser.add_argument("--diff-only", action="store_true", help="Run kubectl diff and skip apply")
     args = parser.parse_args()
 
     exporters, otlp_endpoint = _parse_exporters(args.exporter)
@@ -69,6 +70,7 @@ def main() -> None:
             kubectl=args.kubectl,
             dry_run=args.dry_run,
             diff=args.diff,
+            diff_only=args.diff_only,
             output_dir=Path(args.output_dir) if args.output_dir else None,
         )
         if args.dry_run:

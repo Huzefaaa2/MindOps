@@ -19,6 +19,7 @@ def main() -> None:
     parser.add_argument("--output", help="Write report JSON to path")
     parser.add_argument("--output-dot", help="Write graph DOT to path")
     parser.add_argument("--output-svg", help="Write graph SVG to path (requires Graphviz dot)")
+    parser.add_argument("--render-svg", help="Write DOT + SVG using the provided base path")
     args = parser.parse_args()
 
     analyzer = TopologyAnalyzer(error_threshold=args.error_threshold)
@@ -32,26 +33,30 @@ def main() -> None:
         Path(args.output).write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(json.dumps(payload, indent=2))
 
-    if args.output_dot:
+    if args.output_dot or args.output_svg or args.render_svg:
         graph = TopologyGraph()
         for node in report.nodes:
             graph.add_node(node)
         for edge in report.edges:
             graph.add_edge(edge)
-        dot_path = Path(args.output_dot)
-        dot_path.write_text(graph.to_dot(), encoding="utf-8")
-        if args.output_svg:
-            _render_svg(dot_path, Path(args.output_svg))
 
-    if args.output_svg and not args.output_dot:
-        dot_path = Path(args.output_svg).with_suffix(".dot")
-        graph = TopologyGraph()
-        for node in report.nodes:
-            graph.add_node(node)
-        for edge in report.edges:
-            graph.add_edge(edge)
-        dot_path.write_text(graph.to_dot(), encoding="utf-8")
-        _render_svg(dot_path, Path(args.output_svg))
+        if args.render_svg:
+            base = Path(args.render_svg)
+            dot_path = base.with_suffix(".dot")
+            svg_path = base.with_suffix(".svg")
+            dot_path.write_text(graph.to_dot(), encoding="utf-8")
+            _render_svg(dot_path, svg_path)
+
+        if args.output_dot:
+            dot_path = Path(args.output_dot)
+            dot_path.write_text(graph.to_dot(), encoding="utf-8")
+            if args.output_svg:
+                _render_svg(dot_path, Path(args.output_svg))
+
+        if args.output_svg and not args.output_dot and not args.render_svg:
+            dot_path = Path(args.output_svg).with_suffix(".dot")
+            dot_path.write_text(graph.to_dot(), encoding="utf-8")
+            _render_svg(dot_path, Path(args.output_svg))
 
 
 def _serialize(obj):

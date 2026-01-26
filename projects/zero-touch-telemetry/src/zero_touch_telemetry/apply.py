@@ -13,6 +13,7 @@ def apply_plan_dict(
     kubectl: str = "kubectl",
     dry_run: bool = False,
     diff: bool = False,
+    diff_only: bool = False,
     output_dir: Optional[Path] = None,
 ) -> List[str]:
     commands: List[str] = []
@@ -20,6 +21,9 @@ def apply_plan_dict(
     patches = plan.get("collector", {}).get("patches", [])
 
     manifest_path = None
+    if diff_only:
+        diff = True
+
     if manifest_yaml:
         if output_dir:
             output_dir.mkdir(parents=True, exist_ok=True)
@@ -34,9 +38,10 @@ def apply_plan_dict(
             commands.append(f"{kubectl} diff -f {manifest_path}")
             if not dry_run:
                 _run([kubectl, "diff", "-f", str(manifest_path)])
-        commands.append(f"{kubectl} apply -f {manifest_path}")
-        if not dry_run:
-            _run([kubectl, "apply", "-f", str(manifest_path)])
+        if not diff_only:
+            commands.append(f"{kubectl} apply -f {manifest_path}")
+            if not dry_run:
+                _run([kubectl, "apply", "-f", str(manifest_path)])
 
     for patch in patches:
         kind = str(patch.get("kind", "deployment")).lower()
@@ -55,9 +60,10 @@ def apply_plan_dict(
                     "spec": patch.get("patch", {}).get("spec", {}),
                 })
                 _run_stdin(diff_cmd, diff_payload)
-        commands.append(" ".join(cmd))
-        if not dry_run:
-            _run(cmd)
+        if not diff_only:
+            commands.append(" ".join(cmd))
+            if not dry_run:
+                _run(cmd)
 
     return commands
 

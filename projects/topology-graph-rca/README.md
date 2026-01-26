@@ -74,6 +74,15 @@ PYTHONPATH=src python3 -m topology_graph_rca.cli \
 
 Note: SVG output requires Graphviz (`dot`) installed.
 
+Render both DOT + SVG in one step:
+
+```bash
+PYTHONPATH=src python3 -m topology_graph_rca.cli \
+  --manifests examples/sample_k8s.yaml \
+  --traces examples/sample_trace.json \
+  --render-svg out_graph
+```
+
 ## Output example
 
 ```json
