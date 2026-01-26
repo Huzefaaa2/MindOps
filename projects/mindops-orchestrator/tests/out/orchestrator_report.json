@@ -1,0 +1,9 @@
+{
+  "zero_touch": {
+    "collector": {}
+  },
+  "slo_copilot": {
+    "foo": "bar"
+  },
+  "warnings": []
+}

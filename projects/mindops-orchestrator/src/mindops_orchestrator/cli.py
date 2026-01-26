@@ -17,6 +17,10 @@ def main() -> None:
     parser.add_argument("--zero-touch-mode", default="auto")
     parser.add_argument("--zero-touch-namespace", default="observability")
     parser.add_argument("--zero-touch-exporter", action="append")
+    parser.add_argument("--zero-touch-apply", action="store_true", help="Apply Zero-Touch plan via kubectl")
+    parser.add_argument("--zero-touch-diff-only", action="store_true", help="Run kubectl diff only for Zero-Touch plan")
+    parser.add_argument("--kubectl", default="kubectl", help="kubectl binary path for Zero-Touch apply")
+    parser.add_argument("--export-dir", help="Write structured report artifacts to this directory")
     parser.add_argument("--output", help="Write orchestrator report JSON")
     args = parser.parse_args()
 
@@ -39,10 +43,12 @@ def main() -> None:
     _extend_path(repo_root / "projects" / "t-rag" / "src")
     _extend_path(repo_root / "projects" / "caat")
 
+    zero_touch_plan = None
     if args.manifests:
         try:
             from zero_touch_telemetry.discovery import discover_services
             from zero_touch_telemetry.planner import ZeroTouchPlanner
+            from zero_touch_telemetry.apply import apply_plan_dict
         except Exception as exc:
             report["warnings"].append(f"Zero-Touch unavailable: {exc}")
         else:
@@ -55,8 +61,19 @@ def main() -> None:
                 otlp_export_endpoint=otlp_endpoint,
             )
             plan = planner.plan(discovered)
-            report["zero_touch"] = _serialize(plan)
+            zero_touch_plan = _serialize(plan)
+            report["zero_touch"] = zero_touch_plan
+            if args.zero_touch_apply or args.zero_touch_diff_only:
+                commands = apply_plan_dict(
+                    zero_touch_plan,
+                    kubectl=args.kubectl,
+                    diff_only=args.zero_touch_diff_only,
+                    diff=True,
+                    output_dir=Path(args.export_dir) if args.export_dir else None,
+                )
+                report["zero_touch_apply"] = {"commands": commands, "diff_only": args.zero_touch_diff_only}
 
+    slo_report = None
     if args.trace:
         try:
             from slo_copilot.copilot import SLOCopilot
@@ -70,9 +87,18 @@ def main() -> None:
                 expected_signals=args.expected_signal,
                 observed_signals=args.observed_signal,
             )
-            report["slo_copilot"] = _serialize(copilot_report)
+            slo_report = _serialize(copilot_report)
+            report["slo_copilot"] = slo_report
             report["caat"] = _serialize(copilot_report.telemetry_recommendation) if copilot_report.telemetry_recommendation else None
             report["t_rag"] = copilot_report.rca
+
+    if args.export_dir:
+        _export_structured(
+            Path(args.export_dir),
+            report=report,
+            zero_touch=zero_touch_plan,
+            slo_report=slo_report,
+        )
 
     _emit(report, args.output)
 
@@ -82,6 +108,25 @@ def _emit(report: Dict[str, Any], output: Optional[str]) -> None:
     if output:
         Path(output).write_text(payload, encoding="utf-8")
     print(payload)
+
+
+def _export_structured(base: Path, report: Dict[str, Any], zero_touch: Optional[Dict[str, Any]], slo_report: Optional[Dict[str, Any]]) -> None:
+    base.mkdir(parents=True, exist_ok=True)
+    (base / "orchestrator_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    if zero_touch:
+        ztt_dir = base / "zero_touch"
+        ztt_dir.mkdir(parents=True, exist_ok=True)
+        (ztt_dir / "plan.json").write_text(json.dumps(zero_touch, indent=2), encoding="utf-8")
+        manifest = zero_touch.get("collector", {}).get("manifest_yaml")
+        config = zero_touch.get("collector", {}).get("config_yaml")
+        if manifest:
+            (ztt_dir / "collector-manifest.yaml").write_text(manifest, encoding="utf-8")
+        if config:
+            (ztt_dir / "collector-config.yaml").write_text(config, encoding="utf-8")
+    if slo_report:
+        slo_dir = base / "slo_copilot"
+        slo_dir.mkdir(parents=True, exist_ok=True)
+        (slo_dir / "report.json").write_text(json.dumps(slo_report, indent=2), encoding="utf-8")
 
 
 def _split_floats(values: Optional[List[str]]) -> Optional[List[float]]:
