@@ -46,7 +46,7 @@ flowchart TB
 This repository follows a modular layout under the `projects/` directory.  Each
 subdirectory contains a self‑contained project along with its code, deployment
 scripts, documentation and examples.  A brief overview of the planned
-projects is provided below.  Projects 1 through 4 are implemented at the moment;
+projects is provided below.  Projects 1 through 5 are implemented at the moment;
 the remaining projects are placeholders for future work.
 
 | Project | Directory | Description | LinkedIn Deep Dive |
@@ -55,7 +55,7 @@ the remaining projects are placeholders for future work.
 | 2 | [`projects/t‑rag`](projects/t-rag) | **Trace‑Native RAG for Root Cause** - T‑RAG tackles the next stage: rapid, AI‑assisted root cause analysis (RCA) using live traces, logs and metrics. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-2-T-RAG) | [See trace‑native RAG turn signals into fast RCA](https://www.linkedin.com/pulse/mindops-project-2-trag-tracenative-rag-root-cause-edition-husain-vcklf) |
 | 3 | [`projects/ebpf‑bot`](projects/ebpf-bot) | **eBPF Coverage Bot** – Project 3 adds full observability to the ebpf-bot system by integrating OpenTelemetry-based tracing, metrics, and logging across its core modules. It captures spans for major operations like signal ingestion, processing, coverage decisions, and orchestrator logic, enhancing them with meaningful attributes and error events. Metrics such as decision counts and processing latency are emitted and exposed via Prometheus, while structured logs include trace and span correlation for streamlined debugging. The setup is fully containerized with Docker Compose, supporting Jaeger, Prometheus, and Grafana for visualization and analysis. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-3-eBPF-Bot) | [Watch the coverage loop close with end‑to‑end telemetry](https://www.linkedin.com/pulse/mindops-project-3-ebpf-coverage-bot-completing-loop-huzefa-husain-rtdaf) |
 | 4 | [`projects/slo‑copilot`](projects/slo-copilot) | **SLO Copilot + Trace‑Based Testing** – generates SLOs from trace baselines, runs trace‑based fault tests, emits guardrail policies, and exports OpenSLO (JSON/YAML). Integrates with CAAT, T‑RAG, and eBPF Bot. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-4-SLO-Copilot) | — |
-| 5 | [`projects/zero‑touch‑telemetry`](projects/zero-touch-telemetry) | **Zero‑Touch Telemetry for Kubernetes** – auto‑discovers services and provisions collectors with minimal manual wiring (coming soon). [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-5-Zero-Touch-Telemetry) | — |
+| 5 | [`projects/zero‑touch‑telemetry`](projects/zero-touch-telemetry) | **Zero‑Touch Telemetry for Kubernetes** – discovers workloads from manifests, plans collector topology (gateway/daemonset/sidecar), and emits OTEL configs plus patch hints. [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-5-Zero-Touch-Telemetry) | — |
 | 6 | [`projects/pii‑guardrail`](projects/pii-guardrail) | **PII Guardrail Pre‑Ingest** – redacts sensitive data in logs/traces before they enter observability pipelines (coming soon). [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-6-PII-Guardrail) | — |
 | 7 | [`projects/topology‑graph‑rca`](projects/topology-graph-rca) | **Topology Graph RCA Engine** – correlates incidents using a service/topology graph for cross‑layer root cause analysis (coming soon). [[Wiki]](https://github.com/Huzefaaa2/MindOps/wiki/Project-7-Topology-Graph-RCA) | — |
 

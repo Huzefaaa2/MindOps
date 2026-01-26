@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: storefront
+  labels:
+    app: checkout
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: checkout
+  template:
+    metadata:
+      labels:
+        app: checkout
+    spec:
+      containers:
+        - name: checkout
+          image: python:3.11-slim
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENV
+              value: prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout
+  namespace: storefront
+spec:
+  selector:
+    app: checkout
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+  namespace: storefront
+  labels:
+    app: payments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: payments
+          image: ghcr.io/example/payments-java:latest
+          ports:
+            - containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  namespace: storefront
+spec:
+  selector:
+    app: payments
+  ports:
+    - port: 9090
+      targetPort: 9090
