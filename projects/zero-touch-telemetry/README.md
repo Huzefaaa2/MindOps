@@ -139,7 +139,8 @@ PYTHONPATH=src python3 -m zero_touch_telemetry.cli \
   --manifests examples/sample_k8s.yaml \
   --mode gateway \
   --output-dir out \
-  --apply
+  --apply \
+  --diff
 ```
 
 Apply a saved plan later:

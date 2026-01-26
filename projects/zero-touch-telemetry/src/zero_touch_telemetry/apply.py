@@ -12,6 +12,7 @@ def apply_plan_dict(
     plan: Dict[str, Any],
     kubectl: str = "kubectl",
     dry_run: bool = False,
+    diff: bool = False,
     output_dir: Optional[Path] = None,
 ) -> List[str]:
     commands: List[str] = []
@@ -29,6 +30,10 @@ def apply_plan_dict(
             manifest_path = Path(handle.name)
             handle.write(manifest_yaml.encode("utf-8"))
             handle.close()
+        if diff:
+            commands.append(f"{kubectl} diff -f {manifest_path}")
+            if not dry_run:
+                _run([kubectl, "diff", "-f", str(manifest_path)])
         commands.append(f"{kubectl} apply -f {manifest_path}")
         if not dry_run:
             _run([kubectl, "apply", "-f", str(manifest_path)])
@@ -39,6 +44,17 @@ def apply_plan_dict(
         namespace = patch.get("namespace", "default")
         payload = json.dumps(patch.get("patch", {}))
         cmd = [kubectl, "patch", kind, name, "-n", namespace, "--type", "merge", "-p", payload]
+        if diff:
+            diff_cmd = [kubectl, "diff", "-n", namespace, "-f", "-"]
+            commands.append(" ".join(diff_cmd))
+            if not dry_run:
+                diff_payload = json.dumps({
+                    "apiVersion": "apps/v1",
+                    "kind": patch.get("kind", "Deployment"),
+                    "metadata": {"name": name, "namespace": namespace},
+                    "spec": patch.get("patch", {}).get("spec", {}),
+                })
+                _run_stdin(diff_cmd, diff_payload)
         commands.append(" ".join(cmd))
         if not dry_run:
             _run(cmd)
@@ -48,3 +64,7 @@ def apply_plan_dict(
 
 def _run(cmd: Iterable[str]) -> None:
     subprocess.run(list(cmd), check=True)
+
+
+def _run_stdin(cmd: Iterable[str], payload: str) -> None:
+    subprocess.run(list(cmd), input=payload.encode("utf-8"), check=True)

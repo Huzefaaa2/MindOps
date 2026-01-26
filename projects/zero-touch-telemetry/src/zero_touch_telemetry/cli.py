@@ -36,6 +36,7 @@ def main() -> None:
     parser.add_argument("--apply", action="store_true", help="Apply manifest and patches via kubectl")
     parser.add_argument("--kubectl", default="kubectl", help="kubectl binary path")
     parser.add_argument("--dry-run", action="store_true", help="Print kubectl commands without executing")
+    parser.add_argument("--diff", action="store_true", help="Run kubectl diff before apply")
     args = parser.parse_args()
 
     exporters, otlp_endpoint = _parse_exporters(args.exporter)
@@ -67,6 +68,7 @@ def main() -> None:
             _serialize(plan),
             kubectl=args.kubectl,
             dry_run=args.dry_run,
+            diff=args.diff,
             output_dir=Path(args.output_dir) if args.output_dir else None,
         )
         if args.dry_run:

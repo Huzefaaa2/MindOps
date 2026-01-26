@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from pathlib import Path
 from typing import List, Optional
 
@@ -17,6 +18,7 @@ def main() -> None:
     parser.add_argument("--error-threshold", type=float, default=0.05)
     parser.add_argument("--output", help="Write report JSON to path")
     parser.add_argument("--output-dot", help="Write graph DOT to path")
+    parser.add_argument("--output-svg", help="Write graph SVG to path (requires Graphviz dot)")
     args = parser.parse_args()
 
     analyzer = TopologyAnalyzer(error_threshold=args.error_threshold)
@@ -36,7 +38,20 @@ def main() -> None:
             graph.add_node(node)
         for edge in report.edges:
             graph.add_edge(edge)
-        Path(args.output_dot).write_text(graph.to_dot(), encoding="utf-8")
+        dot_path = Path(args.output_dot)
+        dot_path.write_text(graph.to_dot(), encoding="utf-8")
+        if args.output_svg:
+            _render_svg(dot_path, Path(args.output_svg))
+
+    if args.output_svg and not args.output_dot:
+        dot_path = Path(args.output_svg).with_suffix(".dot")
+        graph = TopologyGraph()
+        for node in report.nodes:
+            graph.add_node(node)
+        for edge in report.edges:
+            graph.add_edge(edge)
+        dot_path.write_text(graph.to_dot(), encoding="utf-8")
+        _render_svg(dot_path, Path(args.output_svg))
 
 
 def _serialize(obj):
@@ -47,6 +62,13 @@ def _serialize(obj):
     if isinstance(obj, dict):
         return {key: _serialize(value) for key, value in obj.items()}
     return obj
+
+
+def _render_svg(dot_path: Path, svg_path: Path) -> None:
+    try:
+        subprocess.run(["dot", "-Tsvg", str(dot_path), "-o", str(svg_path)], check=True)
+    except FileNotFoundError as exc:
+        raise RuntimeError("Graphviz 'dot' not found. Install graphviz to render SVG.") from exc
 
 
 if __name__ == "__main__":

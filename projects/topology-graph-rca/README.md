@@ -68,8 +68,11 @@ PYTHONPATH=src python3 -m topology_graph_rca.cli \
   --manifests examples/sample_k8s.yaml \
   --traces examples/sample_trace.json \
   --output out_report.json \
-  --output-dot out_graph.dot
+  --output-dot out_graph.dot \
+  --output-svg out_graph.svg
 ```
+
+Note: SVG output requires Graphviz (`dot`) installed.
 
 ## Output example
 
