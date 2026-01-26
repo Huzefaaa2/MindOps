@@ -1,0 +1,18 @@
+apiVersion: v2
+name: zero-touch-telemetry
+description: Helm chart for Zero-Touch Telemetry collectors
+version: 0.1.0
+appVersion: "0.1.0"
+
+type: application
+
+maintainers:
+  - name: MindOps
+    email: info@mindops.example.com
+
+home: https://github.com/Huzefaaa2/MindOps
+keywords:
+  - observability
+  - opentelemetry
+  - kubernetes
+  - telemetry

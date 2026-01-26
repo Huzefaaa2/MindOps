@@ -56,6 +56,30 @@ The command writes:
 - `out/collector-manifest.yaml` (k8s manifest)
 - `out/plan.json` (discovery + plan details)
 
+## Helm chart
+
+Deploy a collector with Helm (gateway or daemonset):
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry \
+  --set mode=gateway \
+  --set collector.exporters[0]=logging
+```
+
+Switch to daemonset:
+
+```bash
+helm install ztt deploy/helm/zero-touch-telemetry --set mode=daemonset
+```
+
+## OpenTelemetry Operator auto-instrumentation
+
+Sample `Instrumentation` CRs and workload annotations live in `deploy/otel-operator/`:
+
+```bash
+kubectl apply -f deploy/otel-operator/instrumentation.yaml
+```
+
 ## Configuration
 
 - `--mode auto|gateway|daemonset|sidecar`

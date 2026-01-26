@@ -1,0 +1,21 @@
+mode: gateway
+
+image:
+  repository: otel/opentelemetry-collector
+  tag: "0.97.0"
+  pullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+    grpc: 4317
+    http: 4318
+
+collector:
+  samplingRate: 1.0
+  exporters:
+    - logging
+  otlpExporterEndpoint: "http://otel-collector-gateway:4317"
+
+resources: {}

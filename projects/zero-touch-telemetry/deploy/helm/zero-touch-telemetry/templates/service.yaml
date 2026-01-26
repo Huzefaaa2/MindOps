@@ -1,0 +1,19 @@
+{{- if and .Values.service.enabled (ne .Values.mode "sidecar") -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zeroTouch.fullname" . }}
+  labels:
+{{ include "zeroTouch.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+{{ include "zeroTouch.labels" . | indent 4 }}
+  ports:
+    - name: otlp-grpc
+      port: {{ .Values.service.ports.grpc }}
+      targetPort: {{ .Values.service.ports.grpc }}
+    - name: otlp-http
+      port: {{ .Values.service.ports.http }}
+      targetPort: {{ .Values.service.ports.http }}
+{{- end }}

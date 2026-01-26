@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: storefront
+  annotations:
+    instrumentation.opentelemetry.io/inject-java: "observability/java"
+    instrumentation.opentelemetry.io/inject-python: "observability/python"
+    instrumentation.opentelemetry.io/inject-nodejs: "observability/nodejs"
+    instrumentation.opentelemetry.io/inject-dotnet: "observability/dotnet"
+spec:
+  template:
+    metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "observability/java"
+        instrumentation.opentelemetry.io/inject-python: "observability/python"
+        instrumentation.opentelemetry.io/inject-nodejs: "observability/nodejs"
+        instrumentation.opentelemetry.io/inject-dotnet: "observability/dotnet"
