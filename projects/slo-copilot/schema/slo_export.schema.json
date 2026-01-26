@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SLO Copilot Export",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "slos"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "generated_at": {"type": "string"},
+    "slos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "service", "target"],
+        "properties": {
+          "name": {"type": "string"},
+          "service": {"type": "string"},
+          "description": {"type": "string"},
+          "labels": {
+            "type": "object",
+            "additionalProperties": {"type": "string"}
+          },
+          "target": {
+            "type": "object",
+            "required": ["metric", "comparator", "threshold", "window_days"],
+            "properties": {
+              "metric": {"type": "string"},
+              "comparator": {"type": "string"},
+              "threshold": {"type": "number"},
+              "window_days": {"type": "integer"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

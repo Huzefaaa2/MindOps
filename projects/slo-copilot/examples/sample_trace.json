@@ -1,0 +1,55 @@
+[
+  {
+    "traceId": "trace-1",
+    "spanId": "span-1",
+    "parentSpanId": null,
+    "name": "GET /checkout",
+    "startTimeUnixNano": 1710000000000000000,
+    "endTimeUnixNano": 1710000000450000000,
+    "attributes": [
+      {"key": "service.name", "value": {"stringValue": "checkout-service"}},
+      {"key": "http.status_code", "value": {"intValue": 200}}
+    ],
+    "status": {"code": "OK"}
+  },
+  {
+    "traceId": "trace-1",
+    "spanId": "span-2",
+    "parentSpanId": "span-1",
+    "name": "POST /payment",
+    "startTimeUnixNano": 1710000000500000000,
+    "endTimeUnixNano": 1710000001200000000,
+    "attributes": [
+      {"key": "service.name", "value": {"stringValue": "payment-service"}},
+      {"key": "http.status_code", "value": {"intValue": 500}},
+      {"key": "exception.message", "value": {"stringValue": "card declined"}}
+    ],
+    "status": {"code": "ERROR"}
+  },
+  {
+    "traceId": "trace-2",
+    "spanId": "span-3",
+    "parentSpanId": null,
+    "name": "GET /catalog",
+    "startTimeUnixNano": 1710000002000000000,
+    "endTimeUnixNano": 1710000002300000000,
+    "attributes": [
+      {"key": "service.name", "value": {"stringValue": "catalog-service"}},
+      {"key": "http.status_code", "value": {"intValue": 200}}
+    ],
+    "status": {"code": "OK"}
+  },
+  {
+    "traceId": "trace-2",
+    "spanId": "span-4",
+    "parentSpanId": "span-3",
+    "name": "GET /inventory",
+    "startTimeUnixNano": 1710000002400000000,
+    "endTimeUnixNano": 1710000002900000000,
+    "attributes": [
+      {"key": "service.name", "value": {"stringValue": "inventory-service"}},
+      {"key": "http.status_code", "value": {"intValue": 200}}
+    ],
+    "status": {"code": "OK"}
+  }
+]

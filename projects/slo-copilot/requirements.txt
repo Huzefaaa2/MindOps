@@ -1,0 +1,2 @@
+# Core SLO Copilot dependencies (standard library only).
+# Optional: install project integrations (t-rag, ebpf-bot) as needed.
