@@ -7,6 +7,10 @@ combines state–of–the–art instrumentation, machine learning and AI‐assis
 analysis.  Over time this repository will host multiple projects under the
 MindOps umbrella.  The first project, described below, implements an
 intelligent telemetry system called **Cost‑Aware Adaptive Telemetry (CAAT)**.
+### 🎥 MindOps Architecture Walkthrough (Video)
+
+Watch the visual breakdown of how the **7 MindOps projects** come together into a **cognitive operating system**:  
+👉 https://www.linkedin.com/feed/update/urn:li:ugcPost:7424513621050732544
 
 [Dominant Forces in AI,](https://www.linkedin.com/newsletters/dominant-forces-in-ai-7231479529104371712/) Subscribe Now to stay ahead with the latest in AI trends, innovations, and discussions.
 
